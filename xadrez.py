@@ -147,18 +147,78 @@ def check_options(pieces, locations, turn):
             moves_list = check_pawn(location, turn)
         elif piece == 'rook':
             moves_list = check_rook(location, turn)
-        '''elif piece == 'knight':
+        elif piece == 'knight':
             moves_list = check_knight(location, turn)
         elif piece == 'bishop':
             moves_list = check_bishop(location, turn)
         elif piece == 'queen':
             moves_list = check_queen(location, turn)
         elif piece == 'king':
-            moves_list = check_king(location, turn)'''
+            moves_list = check_king(location, turn)
         all_moves_list.append(moves_list)
     return all_moves_list
 
-#checando movimentos v[alidos para torre - lara
+#checando movimentos válidos para rei - lara
+def check_king(position, color):
+    moves_list = []
+    if color == 'white':
+        enemies_list = black_locations
+        friends_list = white_locations
+    else: 
+        friends_list = black_locations
+        enemies_list = white_locations
+     # checar 8 quadrados para o rei, eles podem ir 1 quadrado em qualquer direção
+    targets = [(1, 0), (1, 1), (1, -1), (-1, 0), (-1, 1), (-1, -1), (0, 1), (0, -1)]
+    for i in range(8):
+        target = (position[0] + targets[i][0], position[1] + targets[i][1])
+        if target not in friends_list and 0 <= target[0] <= 7 and 0 <= target[1] <= 7:
+            moves_list.append(target)
+    return moves_list   
+
+#checando movimentos válidos para rainha - lara
+def check_queen(position, color):
+    moves_list = check_bishop(position, color)
+    second_list = check_rook(position, color)
+    for i in range(len(second_list)):
+        moves_list.append(second_list[i])
+    return moves_list
+
+#checando movimentos válidos para bispo - lara
+def check_bishop(position, color):
+    moves_list = []
+    if color == 'white':
+        enemies_list = black_locations
+        friends_list = white_locations
+    else: 
+        friends_list = black_locations
+        enemies_list = white_locations
+    for i in range(4): #p cima-direita, cima-esquerda, baixo-direita, baixo-esquerda
+        path = True
+        chain = 1
+        if i == 0:
+            x = 1
+            y = -1
+        elif i == 1:
+            x = -1
+            y = -1
+        elif i == 2:
+            x = 1
+            y = 1
+        else:
+            x = -1
+            y = 1
+        while path:  
+            if(position[0] + (chain * x), position[1] + (chain * y)) not in friends_list and \
+                  0 <= position[0] + (chain * x) <= 7 and 0 <= position[1] + (chain * y) <=7:
+                moves_list.append((position [0] + (chain * x), position [1] + (chain * y)))
+                if (position [0] + (chain * x), position [1] + (chain * y)) in enemies_list:
+                    path = False
+                chain += 1
+            else:
+                path = False
+    return moves_list
+
+#checando movimentos válidos para torre - lara
 def check_rook(position, color):
     moves_list = []
     if color == 'white':
@@ -204,7 +264,7 @@ def check_pawn(position, color):
             (position[0], position [1] + 2) not in black_locations and position[1] == 1:      
             moves_list.append((position[0], position[1] + 2))
         if (position[0] + 1, position [1] + 1) in black_locations:
-            moves_list.append((osition[0] + 1, position [1] + 1))
+            moves_list.append((position[0] + 1, position [1] + 1))
         if (position[0] - 1, position [1] + 1) in black_locations:
             moves_list.append((position[0] - 1, position [1] + 1))
     else:
@@ -218,7 +278,25 @@ def check_pawn(position, color):
             moves_list.append((position[0] + 1, position [1] - 1))
         if (position[0] - 1, position [1] - 1) in white_locations:
             moves_list.append((position[0] - 1, position [1] - 1))
-    return moves_list    
+    return moves_list   
+
+#checando movimentos válidos para cavalo - lara 
+def check_knight(position, color):
+    moves_list = []
+    if color == 'white':
+        enemies_list = black_locations
+        friends_list = white_locations
+    else: 
+        friends_list = black_locations
+        enemies_list = white_locations
+    # checar 8 quadrados para o cavalo, eles podem ir 2 quadrados em um sentido e 1 no outro
+    targets = [(1, 2), (1, -2), (2, 1), (2, -1), (-1, 2), (-1, -2), (-2, 1), (-2, -1)]
+    for i in range(8):
+        target = (position[0] + targets[i][0], position[1] + targets[i][1])
+        if target not in friends_list and 0 <= target[0] <= 7 and 0 <= target[1] <= 7:
+            moves_list.append(target)
+    return moves_list
+
 
 #checando movimentos válidos apenas p peças selecionadas - lara
 def check_valid_moves():
