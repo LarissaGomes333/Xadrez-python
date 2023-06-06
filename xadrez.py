@@ -104,13 +104,13 @@ def draw_board():
         row = i // 4
         
         if row % 2 == 0:
-            pygame.draw.rect(screen, 'light gray', [600 - (column * 200), row * 100, 100, 100])
+            pygame.draw.rect(screen, 'yellow', [600 - (column * 200), row * 100, 100, 100])
         else:
-            pygame.draw.rect(screen, 'light gray', [700 - (column * 200), row * 100, 100, 100])
+            pygame.draw.rect(screen, 'yellow', [700 - (column * 200), row * 100, 100, 100])
             
-        pygame.draw.rect(screen, 'gray', [0, 800, WIDTH, 100])
-        pygame.draw.rect(screen, 'gold', [0, 800, WIDTH, 100], 5)
-        pygame.draw.rect(screen, 'gold', [800, 0, 200, HEIGHT], 5)
+        pygame.draw.rect(screen, 'yellow', [0, 800, WIDTH, 100])
+        pygame.draw.rect(screen, 'light grey', [0, 800, WIDTH, 100], 5)
+        pygame.draw.rect(screen, 'light grey', [800, 0, 200, HEIGHT], 5)
         status_text = ['Brancas: Selecione uma peça!', 'Brancas: Sua vez de mover a peça',
                        'Preto: Selecione uma peça!', 'Preto: Sua vez de mover a peça', ]
         
@@ -130,7 +130,7 @@ def draw_pieces():
             screen.blit(white_images[index], (white_locations[i][0] * 100 + 10, white_locations[i][1] * 100 + 10))    
         if turn_step < 2:
             if selection == i:
-                   pygame.draw.rect(screen, 'red', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 100 + 1, 100, 100], 2)
+                   pygame.draw.rect(screen, 'green', [white_locations[i][0] * 100 + 1, white_locations[i][1] * 100 + 1, 100, 100], 2)
 
     for i in range(len(black_pieces)):
         index = piece_list.index(black_pieces[i])
@@ -140,7 +140,7 @@ def draw_pieces():
             screen.blit(black_images[index], (black_locations[i][0] * 100 + 10, black_locations[i][1] * 100 + 10))
         if turn_step >= 2:
             if selection == i:
-                   pygame.draw.rect(screen, 'blue', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1, 100, 100], 2)
+                   pygame.draw.rect(screen, 'green', [black_locations[i][0] * 100 + 1, black_locations[i][1] * 100 + 1, 100, 100], 2)
 
 # função p checar opções válidas p todas peças no tabuleiro - lara
 def check_options(pieces, locations, turn):
@@ -316,9 +316,9 @@ def check_valid_moves():
 #desenhando movimentos válidos na tela - lara
 def draw_valid(moves):
     if turn_step < 2:
-        color = 'red'
+        color = 'green'
     else: 
-        color = 'blue'
+        color = 'green'
     for i in range (len(moves)):
        pygame.draw.circle(screen, color, (moves[i][0] * 100 + 50, moves [i][1] * 100 + 50), 5) 
 
