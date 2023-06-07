@@ -9,7 +9,8 @@ HEIGHT = 900
 screen = pygame.display.set_mode([WIDTH, HEIGHT])
 pygame.display.set_caption('Xadrez pyhton')
 font = pygame.font.Font("freesansbold.ttf", 20)
-medium_font = pygame.font.Font("freesansbold.ttf", 40)
+small_font = pygame.font.Font("freesansbold.ttf", 30)
+medium_font = pygame.font.Font("freesansbold.ttf", 37)
 big_font = pygame.font.Font('freesansbold.ttf', 50)
 timer = pygame.time.Clock()
 fps = 60
@@ -118,6 +119,7 @@ def draw_board():
         for i in range(9):
             pygame.draw.line(screen, 'black', (0, 100 * i), (800, 100 * i), 2)
             pygame.draw.line(screen, 'black', (100 * i, 0), (100 * i, 800 ), 2)
+        pygame.draw.rect(screen, 'red', [800, 805, 195, 190])
         screen.blit(medium_font.render('DESISTIR', True, 'black'), (810, 830))
 
 #desenhando as peças no tabuleiro - lara
@@ -352,13 +354,13 @@ def draw_check():
             for i in range(len(white_options)):
                 if king_location in  white_options[i]:
                     if counter < 15:
-                        pygame.draw.rect(screen, "dark blue", [black_locations[king_index][0] * 100 + 1, black_locations[king_index][1] * 100 + 1, 100, 100], 5)
+                        pygame.draw.rect(screen, "dark red", [black_locations[king_index][0] * 100 + 1, black_locations[king_index][1] * 100 + 1, 100, 100], 5)
                         
 #Fim do jogo
 def draw_game_over():
-    pygame.draw.rect(screen, 'black', [200, 200, 400, 70] )
-    screen.blit(font.render(f'{winner} ganhou!!', True, 'white'), (210, 210))
-    screen.blit(font.render(f'Aperte ENTER para reiniciar a partida!', True, 'white'), (210, 240))
+    pygame.draw.rect(screen, 'black', [100, 200, 650, 280])
+    screen.blit(medium_font.render(f'As {winner} ganharam!!', True, 'red'), (153, 250))
+    screen.blit(small_font.render(f'Pressione ENTER para reiniciar a partida!', True, 'white'), (118, 310))
     
 #loop principal
 black_options = check_options(black_pieces, black_locations, 'black')
@@ -461,8 +463,8 @@ while run:
                 white_options = check_options(white_pieces, white_locations, 'white')
                 
                 
-        if winner != '':
-            game_over = True
-            draw_game_over()
+    if winner != '':
+        game_over = True
+        draw_game_over()
     pygame.display.flip()
 pygame.quit()
