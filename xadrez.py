@@ -112,8 +112,8 @@ def draw_board():
         pygame.draw.rect(screen, 'yellow', [0, 800, WIDTH, 100])
         pygame.draw.rect(screen, 'light grey', [0, 800, WIDTH, 100], 5)
         pygame.draw.rect(screen, 'light grey', [800, 0, 200, HEIGHT], 5)
-        status_text = ['Brancas: Selecione uma peça!', 'Brancas: Sua vez de mover a peça...',
-                       'Preto: Selecione uma peça!', 'Preto: Sua vez de mover a peça...', ]
+        status_text = ['Brancas: Selecione uma peça!', 'Brancas: Sua vez de mover a peça.',
+                       'Pretas: Selecione uma peça!', 'Pretas: Sua vez de mover a peça.', ]
         
         screen.blit(big_font.render(status_text[turn_step], True, 'black'), (20, 820))
         for i in range(9):
